@@ -4,6 +4,7 @@
     $description = $_POST["description"];
     $value = $_POST["value"];
     $ordered = $_POST["ordered"];
+    $id = $_POST["id"];
 
     // validate value
     if (!is_numeric($value)) {
@@ -19,18 +20,28 @@
         exit;
     }
 
-    // check if a record with the same name already exists
     require_once("./connect.php");
-    $sql = "SELECT name FROM product WHERE name = :name";
+
+    // check if the name has been changed
+    $sql = "SELECT name FROM product WHERE id = :id";
     $stmt = $conn->prepare($sql);
-    $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+    $stmt->bindParam(":id", $id, PDO::PARAM_INT);
     $stmt->execute();
     $existing_name = $stmt->fetchColumn();
 
-    if ($existing_name) {
-        echo "<script>alert('Error: A product with that name already exists')</script>";
-        echo "<script>window.history.back()</script>";
-        exit;
+    if ($existing_name !== $name) {
+        // check if a record with the same name already exists,, if it has not been changed, then skip the validation for the name so that the webpage doesn;t throw an error
+        $sql = "SELECT name FROM product WHERE name = :name";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(":name", $name, PDO::PARAM_STR);
+        $stmt->execute();
+        $existing_name = $stmt->fetchColumn();
+
+        if ($existing_name) {
+            echo "<script>alert('Error: A product with that name already exists')</script>";
+            echo "<script>window.history.back()</script>";
+            exit;
+        }
     }
 
     // update the existing record
@@ -40,10 +51,9 @@
     $stmt->bindParam(":description", $description, PDO::PARAM_STR);
     $stmt->bindParam(":value", $value, PDO::PARAM_STR);
     $stmt->bindParam(":ordered", $ordered, PDO::PARAM_STR);
-    $stmt->bindParam(":id", $_POST["id"], PDO::PARAM_INT);
+    $stmt->bindParam(":id", $id, PDO::PARAM_INT);
     $stmt->execute();
 
     header("Location: ./index.php");
     exit;
-
 ?>
