@@ -24,7 +24,7 @@
         <form class="m-5" action="./create.php" method="post">
             <div>
                 <label class="form-label m-3" for="name">Name</label><br>
-                <input class="form-control" type="text" name="name">
+                <input class="form-control" type="text" name="name" required>
             </div>
 
             <div>
@@ -34,12 +34,12 @@
 
             <div>
                 <label class="form-label m-3" for="value">Value</label><br>
-                <input class="form-control form-control" type="text" name="value">
+                <input class="form-control form-control" type="text" name="value" required>
             </div>
 
             <div class="form-group text-center">
                 <label class="form-label m-3" for="ordered">Ordered</label><br>
-                <input class="form-control" type="date" name="ordered">
+                <input class="form-control" type="date" name="ordered" required>
             </div>
 
             <div class="m-3">

@@ -44,7 +44,7 @@ require_once("./connect.php");
 
             <div>
                 <label class="form-label m-3" for="name">Name</label><br>
-                <input class="form-control" type="text" name="name" value="<?= $row->name ?>">
+                <input class="form-control" required type="text" name="name" value="<?= $row->name ?>">
             </div>
 
             <div>
@@ -54,12 +54,12 @@ require_once("./connect.php");
 
             <div>
                 <label class="form-label m-3" for="value">Values</label><br>
-                <input class="form-control" type="text" name="value" value="<?= $row->value ?>">
+                <input class="form-control" required type="text" name="value" value="<?= $row->value ?>">
             </div>
 
             <div>
                 <label class="form-label m-3" for="ordered">Ordered</label><br>
-                <input class="form-control" type="date" name="ordered" value="<?= $row->ordered ?>">
+                <input class="form-control" required type="date" name="ordered" value="<?= $row->ordered ?>">
             </div>
 
             <div>
